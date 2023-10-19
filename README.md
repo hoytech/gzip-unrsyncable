@@ -12,7 +12,7 @@ Consider a sequence that consists of 100,000 `A` characters. Needless to say, `g
     $ perl -e 'print "A"x100_000' | gzip -c --rsyncable | wc -c
     3020
 
-The way `gzip --rsyncable` works is by looking for particular patterns in its input data. Specifically, it queus a stream flush whenever the last 4096 bytes sum to 0 (mod 4096).
+The way `gzip --rsyncable` works is by looking for particular patterns in its input data. Specifically, it queues a stream flush whenever the last 4096 bytes sum to 0 (mod 4096).
 
 The `gzip-unrsyncable` script also looks for these patterns and, when it detects one, modifies the last byte to break the pattern. This prevents `gzip --rsyncable` from flushing its stream:
 
