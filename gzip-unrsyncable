@@ -1,0 +1,31 @@
+#!/usr/bin/env perl
+
+use strict;
+
+my $win = [];
+my $sum = 0;
+my $counter = 0;
+
+while (read(STDIN, my $c, 1)) {
+    my $n = ord($c);
+
+    $sum += $n;
+    push @$win, $n;
+
+    if (@$win > 4096) {
+        $sum -= shift @$win;
+
+        if ($sum % 4096 == 0) {
+            my $v = pop @$win;
+            $sum -= $v;
+            $v = ($v + 1) % 256;
+            $sum += $v;
+            push @$win, $v;
+        }
+    }
+
+    print chr($win->[-1]);
+
+    #print STDERR "byte $counter: $sum ", ($sum % 4096), "\n";
+    $counter++;
+}
